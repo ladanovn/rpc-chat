@@ -9,7 +9,6 @@ export function auth(
     client: IClient,
     clients: IClient[]
 ): IAuthResult {
-
     const id = clients.length;
     client.id = id;
 
