@@ -8,7 +8,7 @@ export function connect(
     param: IConnectParams,
     client: IClient,
     clients: IClient[]
-): IConnectResult {
+): IConnectParams {
     const id = clients.length;
     client.id = id;
 

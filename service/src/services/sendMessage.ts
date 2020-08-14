@@ -19,6 +19,7 @@ export function sendMessage(
                 const request = stringifyRequest<IGetMessageParams>('getMessage', {
                     text: param.text,
                     sender: client.id,
+                    receiver: -1,
                     timestamp: new (Date)(),
                 });
                 receiver.ws.send(request);
@@ -32,6 +33,7 @@ export function sendMessage(
             const request = stringifyRequest<IGetMessageParams>('getMessage', {
                 text: param.text,
                 sender: client.id,
+                receiver: receiver.id,
                 timestamp: new (Date)(),
             });
             receiver.ws.send(request);
