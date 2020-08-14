@@ -3,7 +3,7 @@ import {
     IConnectParams
 } from '../../../interfaces';
 
-let clientIDGenerator = 0;
+let clientIDGenerator = 1;
 
 export function connect(
     param: IConnectParams,
