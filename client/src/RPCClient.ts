@@ -14,12 +14,16 @@ import {
     IJSONRPCResponse,
     IJSONRPCError,
 } from '../../interfaces';
-import { resolve } from 'path';
+
+interface IHandlers {
+    [eventName: string]: (params?: object) => {}
+}
 
 class RPCClient {
     id: number;
     ws: WebSocket;
     url: string;
+    handlers: IHandlers;
     pendingRequests: {
         [id: string]: {
             resolve: (data: object) => {},
@@ -31,18 +35,22 @@ class RPCClient {
         this.url = url;
         this.ws = new WebSocket(url);
         this.pendingRequests = {};
+        this.handlers = {};
 
         this.ws.on('message', (msg: string) => {
-            const data = JSON.parse(msg);
+            const data: IJSONRPCResponse<object> | IJSONRPCError | IJSONRPCRequest<object>= JSON.parse(msg);
 
             // if message is response of previous request
-            if (data.result) {
-                this.responseHandler(data);
+            if ('result' in data || 'error' in data) {
+                this._responseHandler(data);
+
+            } else {
+                this.handlers[data.method](data.params);
             }
         });
     }
 
-    async responseHandler(response: IJSONRPCResponse<object> | IJSONRPCError) {
+    private async _responseHandler(response: IJSONRPCResponse<object> | IJSONRPCError) {
         const responseId = response.id;
 
         if (this.pendingRequests[responseId]) {
@@ -60,6 +68,10 @@ class RPCClient {
 
             delete this.pendingRequests[responseId];
         }
+    }
+
+    async addHandlers(handlers: IHandlers) {
+        this.handlers = Object.assign(this.handlers, handlers);
     }
 
     async connect(params?: IConnectParams): Promise<IConnectResult> {
