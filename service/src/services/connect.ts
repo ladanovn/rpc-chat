@@ -1,15 +1,16 @@
 import { IClient } from '../RPCService';
 import {
-    IConnectParams,
-    IConnectResult
+    IConnectParams
 } from '../../../interfaces';
+
+let clientIDGenerator = 0;
 
 export function connect(
     param: IConnectParams,
     client: IClient,
     clients: IClient[]
 ): IConnectParams {
-    const id = clients.length;
+    const id = clientIDGenerator++
     client.id = id;
 
     return {

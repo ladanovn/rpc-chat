@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { Server } from 'http';
-import { ListenOptions } from 'net';
+import { ListenOptions, AddressInfo } from 'net';
 
 import { stringifyResponse } from '../helpers';
 
@@ -59,8 +59,9 @@ class RPCService {
     /**
      * Start RPC Service
      */
-    listen(options: ListenOptions) {
+    listen(options: ListenOptions): AddressInfo | string {
         this.server.listen(options);
+        return this.server.address();
     }
 }
 

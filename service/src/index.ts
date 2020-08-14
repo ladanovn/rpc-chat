@@ -19,4 +19,5 @@ service.addServices({
     sendMessage
 });
 
-service.listen({ port: SERVICE_PORT });
+const address = service.listen({ port: SERVICE_PORT });
+console.log(`Ready on ${SERVICE_PORT} port`);
