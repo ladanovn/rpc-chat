@@ -1,13 +1,9 @@
 import {
-    IJSONRPCRequest,
-    IJSONRPCResponse,
     stringifyRequest,
     stringifyResponse
-} from './JSONRPC';
+} from './stringify';
 
 export {
-    IJSONRPCRequest,
-    IJSONRPCResponse,
     stringifyRequest,
     stringifyResponse
 }

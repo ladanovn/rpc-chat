@@ -1,0 +1,14 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-shadowed-variable": false
+    },
+    "rulesDirectory": [],
+    "compilerOptions": {
+        "lib": ["es7"]
+    }
+}

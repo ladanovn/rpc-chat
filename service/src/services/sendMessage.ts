@@ -1,5 +1,5 @@
 import { IClient } from '../RPCService';
-import { stringifyRequest } from '../helpers';
+import { stringifyRequest } from '../../helpers';
 import {
     ISendMessageParams,
     ISendMessageResult,

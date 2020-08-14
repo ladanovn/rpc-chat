@@ -1,6 +1,6 @@
 interface IAuthParams {
     login: string,
-    passport: string,
+    passwort: string,
 }
 
 interface IAuthResult {

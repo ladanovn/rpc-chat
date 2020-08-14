@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import { Server } from 'http';
 import { ListenOptions } from 'net';
 
-import { stringifyResponse } from './helpers';
+import { stringifyResponse } from '../helpers';
 
 interface IClient {
     id?: number,

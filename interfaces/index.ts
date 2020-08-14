@@ -12,10 +12,19 @@ import {
     IAuthResult
 } from './auth'
 
+import {
+    IJSONRPCRequest,
+    IJSONRPCResponse,
+    IJSONRPCError,    
+} from './JSONRPC';
+
 export {
     ISendMessageParams,
     ISendMessageResult,
     IGetMessageParams,
     IAuthParams,
-    IAuthResult
+    IAuthResult,
+    IJSONRPCRequest,
+    IJSONRPCResponse,
+    IJSONRPCError,
 }

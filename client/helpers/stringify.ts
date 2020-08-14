@@ -1,22 +1,14 @@
 import uniqid from 'uniqid';
+import {
+    IJSONRPCRequest,
+    IJSONRPCResponse
+} from '../../interfaces';
 
-interface IJSONRPCRequest<Params> {
+function stringifyRequest<Params>(method: string, params: Params, options?: {
     id: string,
-    jsonrpc: string,
-    method: string,
-    params: Params
-}
-
-interface IJSONRPCResponse<Result> {
-    id: string,
-    jsonrpc: string,
-    method: string,
-    result: Result
-}
-
-function stringifyRequest<Params>(method: string, params: Params): string {
+}): string {
     const response: IJSONRPCRequest<Params> = {
-        id: uniqid(),
+        id: options.id || uniqid(),
         jsonrpc: '2.0',
         method,
         params,
@@ -37,8 +29,6 @@ function stringifyResponse<Result>(idRequest: string, method: string, result: Re
 }
 
 export {
-    IJSONRPCRequest,
-    IJSONRPCResponse,
     stringifyRequest,
     stringifyResponse
 }
