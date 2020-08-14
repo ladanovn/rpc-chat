@@ -1,12 +1,16 @@
+import env from 'dotenv';
 import { RPCClient } from './RPCClient';
 import { MessageInterface } from './MessagerInterface';
 import { IGetMessageParams } from '../../interfaces'
 
+env.config();
+
+const {
+    SERVICE_URL
+} = process.env;
+
 (async () => {
-    // TODO:
-    // - remove protocol for connection
-    // - default url to .env
-    const client = new RPCClient('ws://localhost:8000');
+    const client = new RPCClient(SERVICE_URL);
     const { id } = await client.connect();
 
     const messangeInterface = new MessageInterface(id);
