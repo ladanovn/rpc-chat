@@ -27,7 +27,11 @@ const {
 
     const stdin = process.openStdin();
     stdin.addListener("data", async data => {
-        const [text, receiver] = data.toString().trim().split(" ");
+        const formatedData = data.toString().trim();
+        const separatorIndex = formatedData.indexOf(" ");
+
+        const receiver = Number(formatedData.slice(0, separatorIndex));
+        const text = formatedData.slice(separatorIndex);
 
         messangeInterface.addMessage({
             sender: id,
