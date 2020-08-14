@@ -8,7 +8,7 @@ function stringifyRequest<Params>(method: string, params: Params, options?: {
     id: string,
 }): string {
     const response: IJSONRPCRequest<Params> = {
-        id: options.id || uniqid(),
+        id: options ? options.id : uniqid(),
         jsonrpc: '2.0',
         method,
         params,

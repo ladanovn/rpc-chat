@@ -8,9 +8,9 @@ import {
 } from './getMessage';
 
 import {
-    IAuthParams,
-    IAuthResult
-} from './auth'
+    IConnectParams,
+    IConnectResult
+} from './connect'
 
 import {
     IJSONRPCRequest,
@@ -22,8 +22,8 @@ export {
     ISendMessageParams,
     ISendMessageResult,
     IGetMessageParams,
-    IAuthParams,
-    IAuthResult,
+    IConnectParams,
+    IConnectResult,
     IJSONRPCRequest,
     IJSONRPCResponse,
     IJSONRPCError,

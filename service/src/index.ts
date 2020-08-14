@@ -4,7 +4,7 @@ import http from 'http';
 import { RPCService } from './RPCService';
 
 import {
-    auth,
+    connect,
     sendMessage
 } from './services';
 
@@ -14,7 +14,7 @@ const httpServer = http.createServer();
 const service = new RPCService(httpServer);
 
 service.addServices({
-    auth,
+    connect,
     sendMessage
 });
 

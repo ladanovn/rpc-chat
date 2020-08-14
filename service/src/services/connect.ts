@@ -1,14 +1,14 @@
 import { IClient } from '../RPCService';
 import {
-    IAuthParams,
-    IAuthResult
+    IConnectParams,
+    IConnectResult
 } from '../../../interfaces';
 
-export function auth(
-    param: IAuthParams,
+export function connect(
+    param: IConnectParams,
     client: IClient,
     clients: IClient[]
-): IAuthResult {
+): IConnectResult {
     const id = clients.length;
     client.id = id;
 

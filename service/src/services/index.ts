@@ -1,7 +1,7 @@
-import { auth } from './auth'
+import { connect } from './connect'
 import { sendMessage } from './sendMessage'
 
 export {
-    auth,
+    connect,
     sendMessage
 }

@@ -3,7 +3,12 @@ import {
     stringifyResponse
 } from './stringify';
 
+import {
+    openConnectionPromisify
+} from './promisify';
+
 export {
     stringifyRequest,
-    stringifyResponse
+    stringifyResponse,
+    openConnectionPromisify
 }

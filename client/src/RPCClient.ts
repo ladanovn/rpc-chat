@@ -1,10 +1,13 @@
 import WebSocket from 'ws';
 import uniqid from 'uniqid';
-import { stringifyRequest } from '../helpers';
+import {
+    stringifyRequest,
+    openConnectionPromisify
+} from '../helpers';
 
 import {
-    IAuthParams,
-    IAuthResult,
+    IConnectParams,
+    IConnectResult,
     ISendMessageParams,
     ISendMessageResult,
     IJSONRPCRequest,
@@ -19,8 +22,8 @@ class RPCClient {
     url: string;
     pendingRequests: {
         [id: string]: {
-            resolve: (data: IJSONRPCResponse<object>) => {},
-            reject: (data: IJSONRPCError) => {},
+            resolve: (data: object) => {},
+            reject: (data: object) => {},
         }
     };
 
@@ -46,28 +49,27 @@ class RPCClient {
 
             // Check is success response
             if ('result' in response) {
-                this.pendingRequests[responseId].resolve(response);
+                const result = (response as IJSONRPCResponse<object>).result;
+                this.pendingRequests[responseId].resolve(result);
 
             } else {
                 // If response return error
-                this.pendingRequests[responseId].reject(response);
+                const error = (response as IJSONRPCError).error;
+                this.pendingRequests[responseId].resolve(error);
             }
 
             delete this.pendingRequests[responseId];
         }
     }
 
-    async connect() {
-        return new Promise((resolve, reject) => {
-            this.ws.on('open', () => {
-                resolve();
-            });
-        })
+    async connect(params?: IConnectParams): Promise<IConnectResult> {
+        await openConnectionPromisify(this.ws);
+        return await this._connect(params);
     }
 
-    async auth(params: IAuthParams): Promise<IAuthResult> {
+    async sendMessage(params: ISendMessageParams): Promise<ISendMessageResult> {
         const id = uniqid();
-        const request = stringifyRequest<IAuthParams>('auth', params, {
+        const request = stringifyRequest<ISendMessageParams>('sendMessage', params, {
             id,
         });
 
@@ -80,9 +82,9 @@ class RPCClient {
         });
     }
 
-    async sendMessage(params: ISendMessageParams): Promise<ISendMessageResult> {
+    private async _connect(params: IConnectParams): Promise<IConnectResult> {
         const id = uniqid();
-        const request = stringifyRequest<ISendMessageParams>('sendMessage', params, {
+        const request = stringifyRequest<IConnectParams>('connect', params, {
             id,
         });
 
