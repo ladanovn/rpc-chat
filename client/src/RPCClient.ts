@@ -16,7 +16,7 @@ import {
 } from '../../interfaces';
 
 interface IHandlers {
-    [eventName: string]: (params?: object) => {}
+    [eventName: string]: (params?: object) => void
 }
 
 class RPCClient {
