@@ -38,7 +38,7 @@ class RPCClient {
         this.handlers = {};
 
         this.ws.on('message', (msg: string) => {
-            const data: IJSONRPCResponse<object> | IJSONRPCError | IJSONRPCRequest<object>= JSON.parse(msg);
+            const data: IJSONRPCResponse<object> | IJSONRPCError | IJSONRPCRequest<object> = JSON.parse(msg);
 
             // if message is response of previous request
             if ('result' in data || 'error' in data) {
@@ -46,6 +46,42 @@ class RPCClient {
 
             } else {
                 this.handlers[data.method](data.params);
+            }
+        });
+    }
+
+    /**
+     * Adding handler for incomming requests
+     * @param handlers
+     */
+    async addHandlers(handlers: IHandlers) {
+        this.handlers = Object.assign(this.handlers, handlers);
+    }
+
+    /**
+     * Initialize wsbsocket connection
+     * @param params
+     */
+    async connect(params?: IConnectParams): Promise<IConnectResult> {
+        await openConnectionPromisify(this.ws);
+        return await this._connect(params);
+    }
+
+    /**
+     * Sending message
+     * @param params
+     */
+    async sendMessage(params: ISendMessageParams): Promise<ISendMessageResult> {
+        const id = uniqid();
+        const request = stringifyRequest<ISendMessageParams>('sendMessage', params, {
+            id,
+        });
+
+        this.ws.send(request);
+        return new Promise((resolve, reject) => {
+            this.pendingRequests[id] = {
+                resolve: (resolve as any),
+                reject: (reject as any)
             }
         });
     }
@@ -68,30 +104,6 @@ class RPCClient {
 
             delete this.pendingRequests[responseId];
         }
-    }
-
-    async addHandlers(handlers: IHandlers) {
-        this.handlers = Object.assign(this.handlers, handlers);
-    }
-
-    async connect(params?: IConnectParams): Promise<IConnectResult> {
-        await openConnectionPromisify(this.ws);
-        return await this._connect(params);
-    }
-
-    async sendMessage(params: ISendMessageParams): Promise<ISendMessageResult> {
-        const id = uniqid();
-        const request = stringifyRequest<ISendMessageParams>('sendMessage', params, {
-            id,
-        });
-
-        this.ws.send(request);
-        return new Promise((resolve, reject) => {
-            this.pendingRequests[id] = {
-                resolve: (resolve as any),
-                reject: (reject as any)
-            }
-        });
     }
 
     private async _connect(params: IConnectParams): Promise<IConnectResult> {

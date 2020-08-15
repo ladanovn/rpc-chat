@@ -15,6 +15,7 @@ const {
 
     const messangeInterface = new MessageInterface(id);
 
+    // added handlers for incoming message
     client.addHandlers({
         getMessage: (data: IGetMessageParams) => {
             messangeInterface.addMessage({
@@ -23,7 +24,7 @@ const {
             });
             messangeInterface.updateInterface();
         }
-    })
+    });
 
     const stdin = process.openStdin();
     stdin.addListener("data", async data => {

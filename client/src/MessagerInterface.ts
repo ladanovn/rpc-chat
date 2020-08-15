@@ -6,7 +6,6 @@ interface IMessage {
 }
 
 class MessageInterface {
-
     clientId: number;
     msgHistory: {
         sender: number,
@@ -22,10 +21,17 @@ class MessageInterface {
         this.updateInterface();
     }
 
+    /**
+     * Add message to log
+     * @param msg
+     */
     addMessage(msg: IMessage) {
         this.msgHistory.push(msg);
     }
 
+    /**
+     * Rerender console interface
+     */
     updateInterface() {
         console.clear();
         console.log(`Your ID: ${this.clientId}`);

@@ -6,6 +6,12 @@ import {
     IGetMessageParams,
 } from '../../../interfaces';
 
+/**
+ * Service for message processing
+ * @param param
+ * @param client
+ * @param clients
+ */
 export function sendMessage(
     param: ISendMessageParams,
     client: IClient,
