@@ -25,5 +25,5 @@
    - `npm start`
  
    
-## Демо
+## Демо-видео
 [![Watch the video](http://img.youtube.com/vi/vIb_z2k1L-Y/mqdefault.jpg)](https://youtu.be/vIb_z2k1L-Y)
